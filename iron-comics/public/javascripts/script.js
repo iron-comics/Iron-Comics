@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
 
-  console.log('IronGenerator JS imported successfully!');
+
+document.addEventListener('DOMContentLoaded', () => {
 
 }, false);

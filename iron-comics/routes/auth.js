@@ -5,7 +5,7 @@ const User = require("../models/User");
 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
-const bcryptSalt = 10;
+const bcryptSalt = 12;
 
 
 authRoutes.get("/login", (req, res, next) => {
@@ -20,7 +20,7 @@ authRoutes.post("/login", passport.authenticate("local", {
 }));
 
 authRoutes.get("/signup", (req, res, next) => {
-  res.render("auth/signup");
+  res.render("auth/signup", {title:"Comics"});
 });
 
 authRoutes.post("/signup", (req, res, next) => {
