@@ -11,7 +11,7 @@ passport.use(new LocalStrategy((username, password, next) => {
     }
 
     if (!foundUser) {
-      next(null, false, { message: 'Incorrect username' });
+      next(null, false, { message: 'Incorrect nickname' });
       return;
     }
 

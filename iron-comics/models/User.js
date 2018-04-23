@@ -2,8 +2,23 @@ const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
 const userSchema = new Schema({
+  firstname: String,
+  lastname:String,
+  birthday: Date,
   username: String,
-  password: String
+  email: String,
+  image:{
+    fieldname:String,
+    originalname:String,
+    encoding: String,
+    mimetype: String,
+    destination: String,
+    filename: String,
+    path: String,
+    size: Number
+  },
+  password: String,
+  isAdmin:{type:Boolean, default:false},
 }, {
   timestamps: {
     createdAt: 'created_at',

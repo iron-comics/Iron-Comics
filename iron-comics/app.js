@@ -49,6 +49,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
+hbs.registerPartials(__dirname + '/views/partials');
+
 hbs.registerHelper('ifUndefined', (value, options) => {
   if (arguments.length < 2)
       throw new Error("Handlebars Helper ifUndefined needs 1 parameter");
@@ -61,7 +63,7 @@ hbs.registerHelper('ifUndefined', (value, options) => {
   
 
 // default value for title local
-app.locals.title = 'Express - Generated with IronGenerator';
+app.locals.title = 'Iron-Comics';
 
 
 // Enable authentication using session + passport
@@ -80,6 +82,9 @@ app.use('/', index);
 
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
+
+// const privateRoutes = require('./routes/private');
+// app.use('/private', privateRoutes);
       
 
 module.exports = app;

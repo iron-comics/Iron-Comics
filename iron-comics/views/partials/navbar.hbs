@@ -1,0 +1,35 @@
+<nav>
+  <ul>
+    <h1><a href="/">{{title}}</a></h1>
+    {{#if user }}
+    <li>
+      <a href="/private/readed">Readed</a>
+    </li>
+    <li>
+      <a href="/private/wishlist">Wishlist</a>
+    </li>
+    <li>
+      <a href="/auth/favourites">Favourites</a>
+    </li>
+    <li>
+      <a href="/auth/reviews">Reviews</a>
+    </li>
+    <li>
+      <a href="/auth/profile">User Img</a>
+    </li>
+    <li>
+      <a href="/auth/edit">Edit Profile</a>
+    </li>
+    <li>
+      <a href="/auth/logout">Logout</a>
+    </li>
+    {{else}}
+    <li>
+      <a href="/auth/signup">Sign Up</a>
+    </li>
+    <li>
+      <a href="/auth/login">Log In</a>
+    </li>
+    {{/if}}
+  </ul>
+</nav>

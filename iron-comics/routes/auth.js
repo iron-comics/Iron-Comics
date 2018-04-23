@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require('passport');
 const authRoutes = express.Router();
 const User = require("../models/User");
+const uploadCloud = require('../config/cloudinary.js');
 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
@@ -24,17 +25,21 @@ authRoutes.get("/signup", (req, res, next) => {
 });
 
 authRoutes.post("/signup", (req, res, next) => {
+  const firstname = req.body.firstname;
+  const lastname = req.body.lastname;
+  const birthday = req.body.birthday;
+  const email = req.body.email;
   const username = req.body.username;
   const password = req.body.password;
-  const rol = req.body.role;
+  const {fieldname, originalname, encoding, mimetype,destination,filename, path, size} = req.file;
   if (username === "" || password === "") {
-    res.render("auth/signup", { message: "Indicate username and password" });
+    res.render("auth/signup", { message: "Indicate nickname and password" });
     return;
   }
 
   User.findOne({ username }, "username", (err, user) => {
     if (user !== null) {
-      res.render("auth/signup", { message: "The username already exists" });
+      res.render("auth/signup", { message: "The nickname already exists" });
       return;
     }
 
@@ -42,16 +47,19 @@ authRoutes.post("/signup", (req, res, next) => {
     const hashPass = bcrypt.hashSync(password, salt);
 
     const newUser = new User({
+      firstname,
+      lastname,
+      birthday,
+      email,
       username,
       password: hashPass,
-      role:"teacher"
     });
 
     newUser.save((err) => {
       if (err) {
         res.render("auth/signup", { message: "Something went wrong" });
       } else {
-        res.redirect("/");
+        res.redirect("/private/user");
       }
     });
   });
