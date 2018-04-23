@@ -7,7 +7,7 @@ const userSchema = new Schema({
   birthday: Date,
   username: String,
   email: String,
-  image:{
+  photo:{
     fieldname:String,
     originalname:String,
     encoding: String,

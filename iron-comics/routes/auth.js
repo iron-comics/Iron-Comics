@@ -3,6 +3,7 @@ const passport = require('passport');
 const authRoutes = express.Router();
 const User = require("../models/User");
 const uploadCloud = require('../config/cloudinary.js');
+const multer = require('multer');
 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
@@ -24,7 +25,8 @@ authRoutes.get("/signup", (req, res, next) => {
   res.render("auth/signup", {title:"Comics"});
 });
 
-authRoutes.post("/signup", (req, res, next) => {
+const uploadHandler = multer({ dest: './public/uploads/' });
+authRoutes.post("/signup", uploadCloud.single('photo'), (req, res, next) => {
   const firstname = req.body.firstname;
   const lastname = req.body.lastname;
   const birthday = req.body.birthday;
@@ -53,6 +55,16 @@ authRoutes.post("/signup", (req, res, next) => {
       email,
       username,
       password: hashPass,
+      photo:{
+        fieldname,
+    originalname, 
+    encoding,
+    mimetype,
+    destination,
+    filename,
+    path,
+    size
+      }
     });
 
     newUser.save((err) => {

@@ -90,9 +90,6 @@ app.use("/", index);
 const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
 
-const authRoutes = require('./routes/auth');
-app.use('/auth', authRoutes);
-
 // const privateRoutes = require('./routes/private');
 // app.use('/private', privateRoutes);
       
