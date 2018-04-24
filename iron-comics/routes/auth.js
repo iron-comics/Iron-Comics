@@ -3,13 +3,15 @@ const passport = require('passport');
 const authRoutes = express.Router();
 const User = require("../models/User");
 const uploadCloud = require('../config/cloudinary.js');
+const ensureLoggedIn = require('../middlewares/ensureLoggedIn');
+const ensureLoggedOut = require('../middlewares/ensureLoggedOut');
 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
 const bcryptSalt = 12;
 
 
-authRoutes.get("/login", (req, res, next) => {
+authRoutes.get("/login",ensureLoggedOut("/") , (req, res, next) => {
   res.render("auth/login", { "message": req.flash("error") });
 });
 
@@ -20,7 +22,7 @@ authRoutes.post("/login", passport.authenticate("local", {
   passReqToCallback: true
 }));
 
-authRoutes.get("/signup", (req, res, next) => {
+authRoutes.get("/signup",ensureLoggedOut("/"), (req, res, next) => {
   res.render("auth/signup", {title:"Comics"});
 });
 
@@ -65,7 +67,7 @@ authRoutes.post("/signup", (req, res, next) => {
   });
 });
 
-authRoutes.get("/logout", (req, res) => {
+authRoutes.get("/logout", ensureLoggedIn("/auth/login"),(req, res) => {
   req.logout();
   res.redirect("/");
 });
