@@ -85,7 +85,7 @@ const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
 
 const privateRoutes = require("./routes/private");
-app.use("/private", privateRoutes);
+app.use("/private", ensureLoggedIn("/auth/login"), privateRoutes);
 
 const comicsRoutes = require("./routes/comics");
 app.use("/comics", ensureLoggedIn("/auth/login"), comicsRoutes);

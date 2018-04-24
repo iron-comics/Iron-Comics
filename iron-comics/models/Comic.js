@@ -8,8 +8,8 @@ const comicSchema = new Schema({
   issue_number: Number,
   img_icon: String,
   img_medium: String,
-  id: String,
-  idvolume: String
+  id_comic: String,
+  id_volume: String
 });
 
 const Comic = mongoose.model('Comic', comicSchema);
