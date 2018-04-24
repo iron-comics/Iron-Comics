@@ -11,6 +11,7 @@ const path = require("path");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
+const ensureLoggedIn = require('./middlewares/ensureLoggedIn');
 
 
 
@@ -93,6 +94,6 @@ const privateRoutes = require('./routes/private');
 app.use('/private', privateRoutes);
       
 const comicsRoutes = require("./routes/comics");
-app.use("/comics", comicsRoutes);
+app.use("/comics",ensureLoggedIn("/auth/login") ,comicsRoutes);
 
 module.exports = app;

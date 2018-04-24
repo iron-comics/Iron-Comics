@@ -13,6 +13,7 @@ const userSchema = new Schema({
   },
   password: String,
   isAdmin:{type:Boolean, default:false},
+  list:[String]
 }, {
   timestamps: {
     createdAt: 'created_at',
