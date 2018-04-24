@@ -8,14 +8,8 @@ const userSchema = new Schema({
   username: String,
   email: String,
   photo:{
-    fieldname:String,
-    originalname:String,
-    encoding: String,
-    mimetype: String,
-    destination: String,
-    filename: String,
-    path: String,
-    size: Number
+    url: String,
+    secure_url: String
   },
   password: String,
   isAdmin:{type:Boolean, default:false},

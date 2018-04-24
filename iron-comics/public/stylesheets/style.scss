@@ -1,8 +1,39 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #f7f9f9;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  margin-top: 92px;
+  margin-bottom: 76px;
+}
+
+header {
+  background-color: #2081C3;
+  padding: 10px;
 }
 
 a {
-  color: #00B7FF;
+  color: #F7F9F9;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #0A2C42;
+}
+
+footer {
+  background-color: #0A2C42;
+  color: #F7F9F9;
+  padding: 15px;
+  a:hover {
+    color: #2081C3;
+  }
+}
+
+ul {
+  margin-bottom: 0;
+}
+
+li {
+  vertical-align: middle;
 }

@@ -1,33 +1,33 @@
-<nav>
-  <ul>
-    <h1><a href="/">{{title}}</a></h1>
+<nav class="navbar">
+    <a href="/"><h1>{{title}}</h1></a>
+  <ul class="list-inline">
     {{#if user }}
-    <li>
+    <li class="list-inline-item">
       <a href="/private/readed">Readed</a>
     </li>
-    <li>
+    <li class="list-inline-item">
       <a href="/private/wishlist">Wishlist</a>
     </li>
-    <li>
+    <li class="list-inline-item">
       <a href="/auth/favourites">Favourites</a>
     </li>
-    <li>
+    <li class="list-inline-item">
       <a href="/auth/reviews">Reviews</a>
     </li>
-    <li>
-      <a href="/auth/profile">User Img</a>
+    <li class="list-inline-item">
+      <a href="/private/user"><div style="height:60px;width:60px;background:url({{user.photo.secure_url}}) no-repeat center / cover"></div></a>
     </li>
-    <li>
+    <li class="list-inline-item">
       <a href="/auth/edit">Edit Profile</a>
     </li>
-    <li>
+    <li class="list-inline-item">
       <a href="/auth/logout">Logout</a>
     </li>
     {{else}}
-    <li>
+    <li class="list-inline-item">
       <a href="/auth/signup">Sign Up</a>
     </li>
-    <li>
+    <li class="list-inline-item">
       <a href="/auth/login">Log In</a>
     </li>
     {{/if}}

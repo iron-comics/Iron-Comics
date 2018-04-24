@@ -68,7 +68,6 @@ hbs.registerHelper('ifUndefined', (value, options) => {
 // default value for title local
 app.locals.title = 'Iron-Comics';
 
-
 // Enable authentication using session + passport
 app.use(
   session({
@@ -90,8 +89,8 @@ app.use("/", index);
 const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
 
-// const privateRoutes = require('./routes/private');
-// app.use('/private', privateRoutes);
+const privateRoutes = require('./routes/private');
+app.use('/private', privateRoutes);
       
 const comicsRoutes = require("./routes/comics");
 app.use("/comics", comicsRoutes);

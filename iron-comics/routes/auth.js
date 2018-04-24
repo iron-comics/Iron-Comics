@@ -15,7 +15,7 @@ authRoutes.get("/login", (req, res, next) => {
 });
 
 authRoutes.post("/login", passport.authenticate("local", {
-  successRedirect: "/",
+  successRedirect: "/private/user",
   failureRedirect: "/auth/login",
   failureFlash: true,
   passReqToCallback: true
@@ -25,7 +25,6 @@ authRoutes.get("/signup", (req, res, next) => {
   res.render("auth/signup", {title:"Comics"});
 });
 
-const uploadHandler = multer({ dest: './public/uploads/' });
 authRoutes.post("/signup", uploadCloud.single('photo'), (req, res, next) => {
   const firstname = req.body.firstname;
   const lastname = req.body.lastname;
@@ -33,7 +32,8 @@ authRoutes.post("/signup", uploadCloud.single('photo'), (req, res, next) => {
   const email = req.body.email;
   const username = req.body.username;
   const password = req.body.password;
-  const {fieldname, originalname, encoding, mimetype,destination,filename, path, size} = req.file;
+  const {url, secure_url} = req.file;
+  console.log(req.file);
   if (username === "" || password === "") {
     res.render("auth/signup", { message: "Indicate nickname and password" });
     return;
@@ -56,14 +56,8 @@ authRoutes.post("/signup", uploadCloud.single('photo'), (req, res, next) => {
       username,
       password: hashPass,
       photo:{
-        fieldname,
-    originalname, 
-    encoding,
-    mimetype,
-    destination,
-    filename,
-    path,
-    size
+        url,
+        secure_url
       }
     });
 
@@ -71,7 +65,7 @@ authRoutes.post("/signup", uploadCloud.single('photo'), (req, res, next) => {
       if (err) {
         res.render("auth/signup", { message: "Something went wrong" });
       } else {
-        res.redirect("/private/user");
+        res.redirect("/");
       }
     });
   });
