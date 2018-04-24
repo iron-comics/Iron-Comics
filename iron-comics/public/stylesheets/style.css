@@ -1,33 +1,55 @@
 body {
   font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #f7f9f9;
-  padding-top: 60px;
-  padding-bottom: 60px;
-  margin-top: 92px;
-  margin-bottom: 76px; }
+  background: #f7f9f9 url("../images/comic-pattern.jpg") center/cover; }
 
 header {
   background-color: #2081C3;
-  padding: 10px; }
+  height: 76px; }
+  header h1 {
+    font-size: 2rem; }
+  header li a {
+    font-size: 1.5rem; }
+  header a:hover {
+    text-decoration: none;
+    color: #0A2C42; }
+
+.row {
+  margin-right: 0;
+  margin-left: 0; }
 
 a {
   color: #F7F9F9; }
 
 a:hover {
   text-decoration: none;
-  color: #0A2C42; }
+  color: #2081C3; }
 
 footer {
   background-color: #0A2C42;
   color: #F7F9F9;
-  padding: 15px; }
-  footer a:hover {
-    color: #2081C3; }
+  padding: 5px;
+  font-size: 2rem;
+  height: 50px; }
+  footer h2 {
+    margin-bottom: 0; }
 
 ul {
   margin-bottom: 0; }
 
 li {
   vertical-align: middle; }
+
+.container {
+  margin-top: 76px;
+  font-size: 1rem;
+  max-width: 100%;
+  min-height: calc(100vh - 76px - 50px);
+  padding: 40px;
+  text-align: justify;
+  color: #F7F9F9;
+  background-color: rgba(10, 44, 66, 0.6); }
+
+.profile-photo {
+  height: 200px; }
 
 /*# sourceMappingURL=style.css.map */
