@@ -1,16 +1,17 @@
 require("dotenv").config();
 const express = require("express");
 const passport = require("passport");
-const comics = express.Router();
+const comicsRoutes = express.Router();
 const axios = require("axios");
 const Comic = require("../models/Comic");
 const User = require("../models/User");
 const List = require("../models/List");
 
-comics.get("/add", (req, res, next) => {
+comicsRoutes.get("/add", (req, res, next) => {
   const idcomic = req.query.id;
-  if(!idcomic){
-    res.redirect("/private/user")
+  const idList = req.query.name;
+  if (!idcomic) {
+    res.redirect("/private/lists");
     return;
   }
   axios
@@ -24,7 +25,7 @@ comics.get("/add", (req, res, next) => {
       Comic.findOne({ id_comic: datacomic.id }, (err, c) => {
         if (c !== null) {
           console.log("Existe comic" + c);
-          search_list(req.user.id, c.id, datacomic);
+          search_list(idList, c.id, datacomic);
         } else {
           if (!datacomic.store_date) datacomic.store_date = "unknown";
           const newcomic = new Comic({
@@ -38,14 +39,14 @@ comics.get("/add", (req, res, next) => {
             id_volume: datacomic.volume.id
           });
           newcomic.save().then(() => {
-            search_list(req.user.id, newcomic.id, datacomic);
+            search_list(idList, newcomic.id, datacomic);
           });
         }
       });
     });
-  const search_list = (id_user, id_comic, datacomic, name) => {
+  const search_list = (idList, id_comic, datacomic) => {
     console.log(id_comic);
-    List.findOne({$and:[ {id_user}, {name}]}, (err, l) => {
+    List.findOne({_id:idList}, (err, l) => {
       if (l !== null) {
         console.log("Existe Lista");
         for (let i = 0; i < l.id_comic.length; i++) {
@@ -64,10 +65,12 @@ comics.get("/add", (req, res, next) => {
   };
 });
 
-comics.get("/all", (req, res) => {
-  res.render("comics/allcomics");
+comicsRoutes.get("/all", (req, res) => {
+  const idList = req.query.id;
+  res.render("comics/allcomics", { idList });
 });
-comics.post("/comic", (req, res) => {
+comicsRoutes.post("/comic", (req, res) => {
+  const idList = req.query.id;
   const Name = req.body.name;
   const issue_number = `issue_number:${req.body.issue}`;
   axios
@@ -77,21 +80,21 @@ comics.post("/comic", (req, res) => {
       }&sort=issue_number:asc&filter=name:${Name},${issue_number}&format=json`
     )
     .then(comic => {
-      res.render("comics/comics", { pepe: comic.data.results });
+      console.log({idList})
+      res.render("comics/comics", { pepe: comic.data.results, idList , user:req.user});
     });
-  comics.post("/add", (req, res) => {
-    const idcomic = req.query.id;
+});
+comicsRoutes.post("/add", (req, res) => {
 
-    axios
-      .get(
-        `https://comicvine.gamespot.com/api/issues/?api_key=${
-          process.env.API_KEY
-        }&sort=issue_number:asc&filter=id:${id}&format=json`
-      )
-      .then(comic => {
-        res.render("comics/add", { pepe: comic.data.results });
-      });
-  });
+  axios
+    .get(
+      `https://comicvine.gamespot.com/api/issues/?api_key=${
+        process.env.API_KEY
+      }&sort=issue_number:asc&filter=id:${id}&format=json`
+    )
+    .then(comic => {
+      res.render("comics/add", { pepe: comic.data.results });
+    });
 });
 
-module.exports = comics;
+module.exports = comicsRoutes;

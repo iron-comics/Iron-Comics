@@ -1,0 +1,16 @@
+<a href="/lists/create" class="btn" role="button">Create new list</a>
+{{#if list}}
+    <ul>        
+        {{#each list}} 
+            <li><a href="/comics/all?id={{this.id}}">{{this.name}}</a></li>
+            <ul>
+            {{#each this.id_comic}}
+                <li>{{this.title}}</li>
+                <img src="{{this.img_icon}}" alt="">
+            {{/each}}
+            </ul>
+        {{/each}}
+    </ul>
+{{else}}
+    <h2>No list created</h2>
+{{/if}}

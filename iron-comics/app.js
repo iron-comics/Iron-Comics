@@ -81,6 +81,9 @@ require("./passport")(app);
 const index = require("./routes/index");
 app.use("/", index);
 
+const listsRoutes = require("./routes/lists");
+app.use("/lists", ensureLoggedIn("/auth/login"), listsRoutes);
+
 const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
 
