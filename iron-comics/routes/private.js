@@ -47,4 +47,5 @@ privateRoutes.get("/lists", (req, res) => {
     res.render("lists/comic_lists", {user:req.user, list})
   });
 })
+
 module.exports = privateRoutes;

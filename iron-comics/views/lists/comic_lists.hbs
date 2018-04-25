@@ -2,13 +2,8 @@
 {{#if list}}
     <ul>        
         {{#each list}} 
-            <li><a href="/comics/all?id={{this.id}}">{{this.name}}</a></li>
-            <ul>
-            {{#each this.id_comic}}
-                <li>{{this.title}}</li>
-                <img src="{{this.img_icon}}" alt="">
-            {{/each}}
-            </ul>
+            <img src="{{this.img_icon}}" alt="">
+            <li>{{this.title}}</li>
         {{/each}}
     </ul>
 {{else}}
