@@ -9,21 +9,34 @@
 <div class="row">
   <div class="col-sm-12">
     <h3>My comic lists</h3>
+    <a href="/lists" class="btn" role="button">View all lists</a>
   </div>
-  <div class="row">
-    <a href="/lists/create" class="btn" role="button">Create new list</a>
-    {{#if list}}
-      <div class="col-sm-6">
-        <ul>        
-          {{#each list}} 
-              <img src="{{this.img_icon}}" alt="">
-              <li>{{this.title}}</li>
-          {{/each}}
-        </ul>
-      </div>
-    {{else}}
-        <h2>No list created</h2>
-    {{/if}}
-  </div>
+</div>
+<div class="row">
+  <a href="/lists/create" class="btn" role="button">Create new list</a>
+</div>
+<div class="row">
+  {{#each list}}
+    <div class="col-sm-6">
+      <h3>{{this.name}}</h3>
+      <ul>        
+        {{#each this.id_comic}}
+          <ul>
+            <li>
+              <img src="{{this.img_icon}}" alt="{{this.title}}">
+              <p>{{this.title}}</p>
+            </li>
+          </ul>
+        {{else}}
+          <p>Empty list</p>
+        {{/each}}
+      </ul>
+    </div>
+  {{else}}
+    <h2>No list created</h2>
+  {{/each}}
+  {{#if spl}}
+    <a href="/lists" class="btn" role="button">View all lists</a>
+  {{/if}}
 </div>
 

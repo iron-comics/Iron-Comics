@@ -1,9 +1,7 @@
-
 {{#each pepe}}
     <p>{{this.name}}</p>
     <img src={{this.image.icon_url}} alt="">
     <script ></script>
-<a href="/comics/add?id={{this.id}}&name={{../idList}}">Prueba</a>
+    <a href="/comics/add?id={{this.id}}&name={{../idList}}">Add</a>
 {{/each}}
-<a href="/comics/all">Return</a>
-<p>{{idList}}</p>
+<a href="/comics/all?id={{idList}}">Return</a>

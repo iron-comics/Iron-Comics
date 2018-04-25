@@ -6,15 +6,25 @@ const User = require("../models/User");
 
 /* GET home page */
 privateRoutes.get('/user', (req, res, next) => {
-  res.render('private/user', {user:req.user});
+  List.find({id_user:req.user.id})
+  .populate("id_comic", "title img_icon")  
+  .then( list => {
+    for (let i = 0; i < list.length; i++) {
+      list.splice(4, list.length)     
+    }
+    let spl;
+    for (let i = 0; i < list.length; i++) {
+      spl += list[i].id_comic.splice(5, list[0].id_comic.length);
+    }
+    console.log(spl)
+    res.render('private/user', {user:req.user, list, spl});
+  });
 });
-
-
 
 /* CRUD -> Udpate, show book update form */
 privateRoutes.get("/edit", (req, res) => {
 User.findById(req.params.id).then(user => {
-    res.render("private/edit", { user:req.user });
+    res.render("private/edit", {user:req.user});
   });
 });
 
@@ -33,19 +43,5 @@ privateRoutes.get("/delete", (req, res) => {
     res.redirect("/");
   });
 });
-
-privateRoutes.get("/lists", (req, res) => {
-  List.find({id_user:req.user.id})
-  .populate("id_comic", "title img_icon")  
-  .then( list => {
-    console.log(list[0].id_comic.length)
-    for (let i = 0; i < list.length; i++) {
-      list[i].id_comic.splice(5, list[0].id_comic.length)     
-    }
-        
-    
-    res.render("lists/comic_lists", {user:req.user, list})
-  });
-})
 
 module.exports = privateRoutes;

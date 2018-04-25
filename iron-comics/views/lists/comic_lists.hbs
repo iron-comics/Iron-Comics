@@ -2,8 +2,15 @@
 {{#if list}}
     <ul>        
         {{#each list}} 
-            <img src="{{this.img_icon}}" alt="">
-            <li>{{this.title}}</li>
+            <li><a href="lists/list?id={{this.id}}">{{this.name}}</a></li>
+            <ul>
+            {{#each this.id_comic}}
+                <li>{{this.title}}</li>
+                <img src="{{this.img_icon}}" alt="">
+            {{else}}
+                <p>Empty list</p>
+            {{/each}}
+            </ul>
         {{/each}}
     </ul>
 {{else}}

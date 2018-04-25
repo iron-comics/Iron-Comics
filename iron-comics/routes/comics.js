@@ -11,7 +11,7 @@ comicsRoutes.get("/add", (req, res, next) => {
   const idcomic = req.query.id;
   const idList = req.query.name;
   if (!idcomic) {
-    res.redirect("/private/lists");
+    res.redirect("/lists/list");
     return;
   }
   axios
@@ -51,15 +51,16 @@ comicsRoutes.get("/add", (req, res, next) => {
         console.log("Existe Lista");
         for (let i = 0; i < l.id_comic.length; i++) {
           if (l.id_comic[i] == id_comic) {
-            res.render("comics/add", { datacomic });
+            res.redirect(`/lists/list?id=${l.id}`);
             return;
           }
         }
         l
           .update({ $push: { id_comic } })
-          .then(() => res.render("comics/add", { datacomic }));
+          .then(() => res.redirect(`/lists/list?id=${l.id}`));
       } else {
         console.log("No existe lista");
+        res.redirect("lists/list");
       }
     });
   };
