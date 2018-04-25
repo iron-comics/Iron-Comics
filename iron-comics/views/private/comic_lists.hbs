@@ -1,8 +1,11 @@
-<ul>
-
-    {{#each list}} 
-        <img src="{{this.img_icon}}" alt="">
-        <li>{{this.title}}</li>
-    {{/each}}
-
-</ul>
+<a href="/lists/create" class="btn" role="button">Create new list</a>
+{{#if list}}
+    <ul>        
+        {{#each list}} 
+            <img src="{{this.img_icon}}" alt="">
+            <li>{{this.title}}</li>
+        {{/each}}
+    </ul>
+{{else}}
+    <h2>No list created</h2>
+{{/if}}
