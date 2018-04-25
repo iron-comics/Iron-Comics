@@ -7,9 +7,12 @@ const Comic = require("../models/Comic");
 const User = require("../models/User");
 const List = require("../models/List");
 
-comics.get("/", (req, res, next) => {
+comics.get("/add", (req, res, next) => {
   const idcomic = req.query.id;
-
+  if(!idcomic){
+    res.redirect("/private/user")
+    return;
+  }
   axios
     .get(
       `https://comicvine.gamespot.com/api/issues/?api_key=${
@@ -20,20 +23,8 @@ comics.get("/", (req, res, next) => {
       const datacomic = comic.data.results[0];
       Comic.findOne({ id_comic: datacomic.id }, (err, c) => {
         if (c !== null) {
-          console.log("Existe" + c);
-          List.findOneAndUpdate({ id_user: req.user.id },{$push:{id_comic:c.id}}, (err, l) => {
-            if (l !== null) {
-              console.log("Existe Lista");
-              res.render("comics/add", { datacomic });
-            } else {
-              const listInfo = {
-                id_user: req.user.id,
-                id_comic: [c.id]
-              };
-              const list = new List(listInfo);
-              list.save().then(() => res.render("comics/add", { datacomic }));
-            }
-          });
+          console.log("Existe comic" + c);
+          search_list(req.user.id, c.id, datacomic);
         } else {
           if (!datacomic.store_date) datacomic.store_date = "unknown";
           const newcomic = new Comic({
@@ -47,24 +38,30 @@ comics.get("/", (req, res, next) => {
             id_volume: datacomic.volume.id
           });
           newcomic.save().then(() => {
-            List.findOneAndUpdate({ id_user: req.user.id },{$push:{id_comic:newcomic.id}} ,(err, l) => {
-              if (l !== null) {
-                console.log("Existe Lista");
-                l.id_comic.push(newcomic.id);
-                res.render("comics/add", { datacomic });
-              } else {
-                const listInfo = {
-                  id_user: req.user.id,
-                  id_comic: [newcomic.id]
-                };
-                const list = new List(listInfo);
-                list.save().then(() => res.render("comics/add", { datacomic }));
-              }
-            });
+            search_list(req.user.id, newcomic.id, datacomic);
           });
         }
       });
     });
+  const search_list = (id_user, id_comic, datacomic, name) => {
+    console.log(id_comic);
+    List.findOne({$and:[ {id_user}, {name}]}, (err, l) => {
+      if (l !== null) {
+        console.log("Existe Lista");
+        for (let i = 0; i < l.id_comic.length; i++) {
+          if (l.id_comic[i] == id_comic) {
+            res.render("comics/add", { datacomic });
+            return;
+          }
+        }
+        l
+          .update({ $push: { id_comic } })
+          .then(() => res.render("comics/add", { datacomic }));
+      } else {
+        console.log("No existe lista");
+      }
+    });
+  };
 });
 
 comics.get("/all", (req, res) => {
