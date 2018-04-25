@@ -9,10 +9,6 @@ privateRoutes.get('/user', (req, res, next) => {
   res.render('private/user', {user:req.user});
 });
 
-privateRoutes.get('/lists', (req, res, next) => {
-  res.render('private/comic_lists', {user:req.user});
-});
-
 /* CRUD -> Udpate, show book update form */
 privateRoutes.get("/edit", (req, res) => {
 User.findById(req.params.id).then(user => {
@@ -36,13 +32,14 @@ privateRoutes.get("/delete", (req, res) => {
   });
 });
 
-privateRoutes.get("/list", (req, res) => {
-  List.findOne({id_user:req.user.id})
+privateRoutes.get("/lists", (req, res) => {
+  List.find({id_user:req.user.id})
   .populate("id_comic", "title img_icon")
   
   .then( list => {
     console.log(list.id_comic)
-    res.render("private/comic_lists", {list:list.id_comic})
+    res.render("private/comic_lists", {user:req.user, list:list.id_comic})
   });
 })
+
 module.exports = privateRoutes;

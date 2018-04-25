@@ -10,7 +10,7 @@ const List = require("../models/List");
 comics.get("/add", (req, res, next) => {
   const idcomic = req.query.id;
   if(!idcomic){
-    res.redirect("/private/user")
+    res.redirect("/private/lists")
     return;
   }
   axios
@@ -65,7 +65,7 @@ comics.get("/add", (req, res, next) => {
 });
 
 comics.get("/all", (req, res) => {
-  res.render("comics/allcomics");
+  res.render("comics/allcomics", {user:req.user});
 });
 comics.post("/comic", (req, res) => {
   const Name = req.body.name;
@@ -77,7 +77,7 @@ comics.post("/comic", (req, res) => {
       }&sort=issue_number:asc&filter=name:${Name},${issue_number}&format=json`
     )
     .then(comic => {
-      res.render("comics/comics", { pepe: comic.data.results });
+      res.render("comics/comics", { user:req.user, pepe: comic.data.results });
     });
   comics.post("/add", (req, res) => {
     const idcomic = req.query.id;

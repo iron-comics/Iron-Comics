@@ -1,13 +1,29 @@
 <div class="row">
-  <div class="col-sm-4 profile-photo" style="background:url({{user.photo.secure_url}}) no-repeat center / cover"></div>
+  <div class="col-sm-4">
+    <div class="profile-photo" style="background:url({{user.photo.secure_url}}) no-repeat center / cover"></div>
+  </div>
   <div class="col-sm-8">
     <h2> Hello, {{ user.username }}.</h2>
   </div>
 </div>
+<div class="row">
+  <div class="col-sm-12">
+    <h3>My comic lists</h3>
+  </div>
+  <div class="row">
+    <a href="/lists/create" class="btn" role="button">Create new list</a>
+    {{#if list}}
+      <div class="col-sm-6">
+        <ul>        
+          {{#each list}} 
+              <img src="{{this.img_icon}}" alt="">
+              <li>{{this.title}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    {{else}}
+        <h2>No list created</h2>
+    {{/if}}
+  </div>
+</div>
 
-
-<p>Lorem fistrum torpedo pupita se calle ustée. Ese que llega amatomaa jarl papaar papaar qué dise usteer quietooor. Llevame al sircoo se calle ustée amatomaa te voy a borrar el cerito quietooor pupita apetecan me cago en tus muelas benemeritaar me cago en tus muelas. Torpedo no te digo trigo por no llamarte Rodrigor ahorarr a peich se calle ustée va usté muy cargadoo ahorarr. Mamaar ahorarr no te digo trigo por no llamarte Rodrigor está la cosa muy malar. Apetecan a gramenawer pecador amatomaa llevame al sircoo hasta luego Lucas. A wan va usté muy cargadoo se calle ustée no te digo trigo por no llamarte Rodrigor mamaar mamaar diodeno amatomaa. Llevame al sircoo benemeritaar torpedo diodeno no puedor.</p>
-
-<p>No te digo trigo por no llamarte Rodrigor benemeritaar te va a hasé pupitaa benemeritaar está la cosa muy malar pupita llevame al sircoo llevame al sircoo pupita te va a hasé pupitaa. Apetecan a peich a wan fistro. Me cago en tus muelas quietooor pupita benemeritaar diodenoo. Diodenoo a wan diodenoo a wan no puedor pecador ese hombree está la cosa muy malar por la gloria de mi madre no te digo trigo por no llamarte Rodrigor. Torpedo quietooor ese que llega pupita caballo blanco caballo negroorl ese pedazo de llevame al sircoo de la pradera benemeritaar sexuarl fistro. Va usté muy cargadoo apetecan ese hombree apetecan va usté muy cargadoo apetecan de la pradera. Llevame al sircoo ese hombree pecador está la cosa muy malar. Benemeritaar a peich se calle ustée torpedo condemor está la cosa muy malar. Benemeritaar caballo blanco caballo negroorl pecador papaar papaar quietooor al ataquerl benemeritaar.</p>
-
-<p>Caballo blanco caballo negroorl va usté muy cargadoo condemor a peich. Qué dise usteer ahorarr fistro ahorarr. Ese que llega fistro a peich condemor la caidita hasta luego Lucas benemeritaar condemor. Ese pedazo de me cago en tus muelas te va a hasé pupitaa a peich pupita no puedor. No te digo trigo por no llamarte Rodrigor de la pradera ese hombree al ataquerl te va a hasé pupitaa. Jarl me cago en tus muelas la caidita de la pradera. De la pradera de la pradera a gramenawer a gramenawer. A peich te va a hasé pupitaa a wan qué dise usteer se calle ustée no puedor por la gloria de mi madre a wan caballo blanco caballo negroorl ese que llega la caidita.</p>
