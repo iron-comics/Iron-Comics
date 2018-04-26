@@ -14,12 +14,12 @@ listsRoutes.get("/", (req, res) => {
       for (let i = 0; i < list.length; i++) {
         list[i].id_comic.splice(5, list[0].id_comic.length)     
       }
-      res.render("lists/comic_lists", {user:req.user, list})
+      res.render("lists/comic_lists", {list})
     });
   })
 
 listsRoutes.get("/create", (req, res) => {
-    res.render("lists/create", {user:req.user})
+    res.render("lists/create")
 })
 
 listsRoutes.post("/create", (req, res) => {
@@ -42,7 +42,7 @@ listsRoutes.get('/list', (req, res, next) => {
   .populate("id_comic", "title img_icon")  
   .then( list => {
     console.log(list)
-    res.render('lists/list', {user:req.user, list});
+    res.render('lists/list', {list});
   });
 });
 

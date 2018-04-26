@@ -98,4 +98,7 @@ app.use("/private", ensureLoggedIn("/auth/login"), privateRoutes);
 const comicsRoutes = require("./routes/comics");
 app.use("/comics", ensureLoggedIn("/auth/login"), comicsRoutes);
 
+const reviewRoutes = require("./routes/reviews");
+app.use("/reviews", ensureLoggedIn("/auth/login"), reviewRoutes);
+
 module.exports = app;

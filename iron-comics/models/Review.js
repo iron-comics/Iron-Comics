@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
 const reviewSchema = new Schema({
-  comictitle: String,
+  id_comic:{type: Schema.Types.ObjectId, ref: "Comic"},
   rating: Number,
   author: String,
+  id_user:{type: Schema.Types.ObjectId, ref: "User"},
   reviewtext: String
 }, {
   timestamps: {

@@ -44,7 +44,7 @@ comicsRoutes.get("/add", (req, res, next) => {
       });
     });
   const search_list = (idList, id_comic, datacomic) => {
-    List.findOne({_id:idList}, (err, l) => {
+    List.findOne({ _id: idList }, (err, l) => {
       if (l !== null) {
         for (let i = 0; i < l.id_comic.length; i++) {
           if (l.id_comic[i] == id_comic) {
@@ -77,12 +77,11 @@ comicsRoutes.post("/comic", (req, res) => {
         process.env.API_KEY
       }&sort=issue_number:asc&filter=name:${Name},${issue_number}&format=json`
     )
-    .then(comic => {
-      res.render("comics/comics", { pepe: comic.data.results, idList , user:req.user});
-    });
+    .then(comic =>
+      res.render("comics/comics", { pepe: comic.data.results, idList })
+    );
 });
 comicsRoutes.post("/add", (req, res) => {
-
   axios
     .get(
       `https://comicvine.gamespot.com/api/issues/?api_key=${
@@ -97,7 +96,7 @@ comicsRoutes.post("/add", (req, res) => {
 /* CRUD -> Delete the comic from list */
 comicsRoutes.get("/delete/list", (req, res) => {
   const idList = req.query.idList;
-  List.findByIdAndRemove({_id:idList}).then(() => {
+  List.findByIdAndRemove({ _id: idList }).then(() => {
     res.redirect("/lists");
   });
 });
@@ -106,17 +105,20 @@ comicsRoutes.get("/delete/list", (req, res) => {
 comicsRoutes.get("/delete/comic", (req, res) => {
   const idComic = req.query.idComic;
   const idList = req.query.idList;
-  List.findByIdAndUpdate({_id:idList}, {$pull:{"id_comic":idComic}}).then(list => {
+  List.findByIdAndUpdate(
+    { _id: idList },
+    { $pull: { id_comic: idComic } }
+  ).then(list => {
     res.redirect(`/lists/list?id=${idList}`);
   });
 });
 
 comicsRoutes.get("/comic_info", (req, res) => {
   const idComic = req.query.id;
-  Comic.findById({_id:idComic}).then(comic => {
-    console.log(comic)
-    res.render("comics/comic_info", {comic: comic});
-  })
+  Comic.findById({ _id: idComic }).then(comic => {
+    console.log(comic);
+    res.render("comics/comic_info", { comic: comic });
+  });
 });
 
 module.exports = comicsRoutes;

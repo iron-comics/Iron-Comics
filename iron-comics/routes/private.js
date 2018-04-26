@@ -19,19 +19,26 @@ privateRoutes.get('/user', (req, res, next) => {
   });
 });
 
-/* CRUD -> Udpate, show book update form */
+/* CRUD -> Udpate, show user update form */
 privateRoutes.get("/edit", (req, res) => {
 User.findById(req.params.id).then(user => {
     res.render("private/edit", {user:req.user});
   });
 });
 
-/* CRUD -> Udpate, update the book in DB */
+/* CRUD -> Udpate, update the user in DB */
 privateRoutes.post("/edit", (req, res) => {
   const { firstname, lastname, birthday, email, username } = req.body;
   const updates = { firstname, lastname, birthday, email, username };
   User.findByIdAndUpdate(req.user.id, updates).then(() => {
     res.redirect("/private/user");
+  });
+});
+
+/* CRUD -> Delete the user in DB */
+privateRoutes.get("/delete", (req, res) => {
+  User.findByIdAndRemove(req.user.id).then(() => {
+    res.redirect("/");
   });
 });
 
