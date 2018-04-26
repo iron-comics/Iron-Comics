@@ -81,7 +81,7 @@ comicsRoutes.post("/comic", (req, res) => {
     )
     .then(comic => {
       console.log({idList})
-      res.render("comics/comics", { pepe: comic.data.results, idList , user:req.user});
+      res.render("comics/comics", { pepe: comic.data.results, idList });
     });
 });
 comicsRoutes.post("/add", (req, res) => {
