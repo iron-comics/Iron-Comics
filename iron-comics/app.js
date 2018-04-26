@@ -15,9 +15,9 @@ const ensureLoggedIn = require("./middlewares/ensureLoggedIn");
 
 mongoose.Promise = Promise;
 mongoose
-  .connect("mongodb://localhost/iron-comics", { useMongoClient: true })
+  .connect(process.env.DB_URL, { useMongoClient: true })
   .then(() => {
-    console.log("Connected to Mongo!");
+    console.log(`Connected to ${process.env.DB_URL}!`);
   })
   .catch(err => {
     console.error("Error connecting to mongo", err);
