@@ -24,7 +24,6 @@ comicsRoutes.get("/add", (req, res, next) => {
       const datacomic = comic.data.results[0];
       Comic.findOne({ id_comic: datacomic.id }, (err, c) => {
         if (c !== null) {
-          console.log("Existe comic" + c);
           search_list(idList, c.id, datacomic);
         } else {
           if (!datacomic.store_date) datacomic.store_date = "unknown";
@@ -45,10 +44,8 @@ comicsRoutes.get("/add", (req, res, next) => {
       });
     });
   const search_list = (idList, id_comic, datacomic) => {
-    console.log(id_comic);
     List.findOne({_id:idList}, (err, l) => {
       if (l !== null) {
-        console.log("Existe Lista");
         for (let i = 0; i < l.id_comic.length; i++) {
           if (l.id_comic[i] == id_comic) {
             res.redirect(`/lists/list?id=${l.id}`);
@@ -59,7 +56,6 @@ comicsRoutes.get("/add", (req, res, next) => {
           .update({ $push: { id_comic } })
           .then(() => res.redirect(`/lists/list?id=${l.id}`));
       } else {
-        console.log("No existe lista");
         res.redirect("lists/list");
       }
     });
@@ -70,6 +66,7 @@ comicsRoutes.get("/all", (req, res) => {
   const idList = req.query.id;
   res.render("comics/allcomics", { idList });
 });
+
 comicsRoutes.post("/comic", (req, res) => {
   const idList = req.query.id;
   const Name = req.body.name;
@@ -81,7 +78,6 @@ comicsRoutes.post("/comic", (req, res) => {
       }&sort=issue_number:asc&filter=name:${Name},${issue_number}&format=json`
     )
     .then(comic => {
-      console.log({idList})
       res.render("comics/comics", { pepe: comic.data.results, idList , user:req.user});
     });
 });
@@ -96,6 +92,31 @@ comicsRoutes.post("/add", (req, res) => {
     .then(comic => {
       res.render("comics/add", { pepe: comic.data.results });
     });
+});
+
+/* CRUD -> Delete the comic from list */
+comicsRoutes.get("/delete/list", (req, res) => {
+  const idList = req.query.idList;
+  List.findByIdAndRemove({_id:idList}).then(() => {
+    res.redirect("/lists");
+  });
+});
+
+/* CRUD -> Delete the comic from list */
+comicsRoutes.get("/delete/comic", (req, res) => {
+  const idComic = req.query.idComic;
+  const idList = req.query.idList;
+  List.findByIdAndUpdate({_id:idList}, {$pull:{"id_comic":idComic}}).then(list => {
+    res.redirect(`/lists/list?id=${idList}`);
+  });
+});
+
+comicsRoutes.get("/comic_info", (req, res) => {
+  const idComic = req.query.id;
+  Comic.findById({_id:idComic}).then(comic => {
+    console.log(comic)
+    res.render("comics/comic_info", {comic: comic});
+  })
 });
 
 module.exports = comicsRoutes;

@@ -16,6 +16,7 @@ var storage = cloudinaryStorage({
   cloudinary: cloudinary,
   folder: 'folder-name',
   allowedFormats: ['jpg', 'png'],
+  transformation: [{quality:'20'}],
   filename: function (req, file, cb) {
     photo = new Date().getTime();
     cb(undefined, photo);

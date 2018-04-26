@@ -7,18 +7,18 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-6">
     <h3>My comic lists</h3>
     <a href="/lists" class="btn" role="button">View all lists</a>
   </div>
-</div>
-<div class="row">
-  <a href="/lists/create" class="btn" role="button">Create new list</a>
+  <div class="col-sm-6">
+    <a href="/lists/create" class="btn" role="button">Create new list</a>
+  </div>
 </div>
 <div class="row">
   {{#each list}}
     <div class="col-sm-6">
-      <h3>{{this.name}}</h3>
+      <h3><a href="/lists/list?id={{this.id}}">{{this.name}}</a></h3>
       <ul>        
         {{#each this.id_comic}}
           <ul>
@@ -35,8 +35,10 @@
   {{else}}
     <h2>No list created</h2>
   {{/each}}
-  {{#if spl}}
+</div>
+<div class="row">
+  <div class="col-sm-12">
     <a href="/lists" class="btn" role="button">View all lists</a>
-  {{/if}}
+  </div>
 </div>
 

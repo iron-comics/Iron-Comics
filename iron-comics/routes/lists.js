@@ -46,4 +46,11 @@ listsRoutes.get('/list', (req, res, next) => {
   });
 });
 
+listsRoutes.get("/delete", (req, res) => {
+  const id = req.query.id;
+  List.findByIdAndRemove({_id:id}).then(() => {
+    res.redirect("/");
+  });
+});
+
 module.exports = listsRoutes;

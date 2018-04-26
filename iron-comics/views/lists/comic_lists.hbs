@@ -3,13 +3,14 @@
     <ul>        
         {{#each list}} 
             <li><a href="lists/list?id={{this.id}}">{{this.name}}</a></li>
+            <a href="/comics/delete/list?idList={{this.id}}" onclick="return confirm('Delete {{this.name}} from BD?')">Delete List</a>
             <ul>
-            {{#each this.id_comic}}
-                <li>{{this.title}}</li>
-                <img src="{{this.img_icon}}" alt="">
-            {{else}}
-                <p>Empty list</p>
-            {{/each}}
+                {{#each this.id_comic}}
+                    <li>{{this.title}}</li>
+                    <img src="{{this.img_icon}}" alt="">
+                {{else}}
+                    <p>Empty list</p>
+                {{/each}}
             </ul>
         {{/each}}
     </ul>

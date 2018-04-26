@@ -12,12 +12,10 @@ privateRoutes.get('/user', (req, res, next) => {
     for (let i = 0; i < list.length; i++) {
       list.splice(4, list.length)     
     }
-    let spl;
     for (let i = 0; i < list.length; i++) {
-      spl += list[i].id_comic.splice(5, list[0].id_comic.length);
+      list[i].id_comic.splice(5, list[0].id_comic.length);
     }
-    console.log(spl)
-    res.render('private/user', {user:req.user, list, spl});
+    res.render('private/user', {user:req.user, list});
   });
 });
 
@@ -34,13 +32,6 @@ privateRoutes.post("/edit", (req, res) => {
   const updates = { firstname, lastname, birthday, email, username };
   User.findByIdAndUpdate(req.user.id, updates).then(() => {
     res.redirect("/private/user");
-  });
-});
-
-/* CRUD -> Delete the book in DB */
-privateRoutes.get("/delete", (req, res) => {
-  User.findByIdAndRemove(req.user.id).then(() => {
-    res.redirect("/");
   });
 });
 

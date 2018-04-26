@@ -68,7 +68,13 @@ authRoutes.post("/signup", uploadCloud.single("photo"), (req, res, next) => {
       if (err) {
         res.render("auth/signup", { message: "Something went wrong" });
       } else {
-        res.redirect("/");
+        req.login(newUser, function(err) {
+          if (!err) {
+            res.redirect("/private/user");
+          } else {
+            res.render("error", err);
+          }
+        });
       }
     });
   });
